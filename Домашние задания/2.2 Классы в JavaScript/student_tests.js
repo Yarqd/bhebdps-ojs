@@ -32,6 +32,15 @@ describe('Домашнее задание к лекции «Классы». До
       expect(student.marks).toEqual({"математика": [3]});
     });
 
+    it('проверка формата оценки и сохранение предмета с любым названием', () => {
+      student.addMark('5', 'математика');
+      student.addMark(NaN, 'математика');
+      expect(student.getAverageBySubject('математика')).toBe(0);
+
+      student.addMark(5, 'constructor');
+      expect(student.getAverageBySubject('constructor')).toBe(5);
+    });
+
     it('подсчёт средней оценки по предмету', () => {
       student.addMark(3, "математика");
       student.addMark(5, "математика");

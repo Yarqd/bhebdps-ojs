@@ -104,6 +104,28 @@ describe('Домашнее задание к лекции «Классы в Java
       expect(secondBook).toEqual(null);
     });
     
+    it('поиск издания 1919 года, выдача, починка и возврат', () => {
+      const novel = new NovelBook('Анна Орлова', 'Город у реки', 1919, 240);
+      const magazine = new Magazine('Мурзилка', 1924, 60);
+
+      library.addBook(novel);
+      library.addBook(magazine);
+      expect(library.findBookBy('releaseDate', 1919)).toBe(novel);
+
+      const issuedBook = library.giveBookByName(novel.name);
+      expect(issuedBook).toBe(novel);
+      expect(library.books).toEqual([magazine]);
+
+      issuedBook.state = 30;
+      library.addBook(issuedBook);
+      expect(library.books).toEqual([magazine]);
+
+      issuedBook.fix();
+      expect(issuedBook.state).toBe(45);
+      library.addBook(issuedBook);
+      expect(library.books).toEqual([magazine, novel]);
+    });
+
     it('выдача книги', () => {
       library.addBook(printItem);
       const firstBook = library.giveBookByName('Типовой школьный журнал');
